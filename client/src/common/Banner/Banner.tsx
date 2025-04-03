@@ -7,10 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { data } from './mocksData';
 import { settings } from './setting';
 
+const SlickSlider = Slider as any;
+
 function Banner() {
   return (
     <section>
-      <Slider {...settings}>
+      <SlickSlider {...settings}>
         {data.map((item) => (
           <div
             key={uuidv4()}
@@ -44,7 +46,7 @@ function Banner() {
             </div>
           </div>
         ))}
-      </Slider>
+      </SlickSlider>
     </section>
   );
 }

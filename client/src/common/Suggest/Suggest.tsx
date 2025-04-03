@@ -18,6 +18,8 @@ function Suggest() {
     setSelectedSlideIndex(next);
   };
 
+  const SlickSlider = Slider as any;
+
   return (
     <section className='flex bg-[#FCF8F3] mt-[70px] w-full container px-4'>
       <div className='flex flex-col px-4 md:px-0 md:flex-row py-[44px] items-center gap-4 w-full'>
@@ -41,7 +43,7 @@ function Suggest() {
           </div>
         </div>
         <div className='w-full md:w-2/3 overflow-hidden'>
-          <Slider
+          <SlickSlider
             {...settings}
             beforeChange={handleBeforeChange}
             className='h-[400px] md:h-[500px]'
@@ -89,7 +91,7 @@ function Suggest() {
                 )}
               </div>
             ))}
-          </Slider>
+          </SlickSlider>
         </div>
       </div>
     </section>
