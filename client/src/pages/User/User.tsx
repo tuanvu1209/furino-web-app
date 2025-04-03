@@ -1,27 +1,26 @@
 import { Button } from '@mui/material';
-import background from '../../assets/images/backgroundShop.png';
+import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import background from '../../assets/images/backgroundShop.png';
 import AlertDialog from '../../common/AlertDialog/AlertDialog';
-import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
 import { selectUser, userActions } from '../../store/user/slice';
+import { LoginRequiredAlert } from '../../common';
 
 function User() {
   const [open, setOpen] = React.useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const navigate = useNavigate();
   const handleLogout = () => {
     setOpen(false);
     dispatch(userActions.logoutUser());
   };
-  
-  useEffect(() => {
-    if (Object.keys(user.data).length === 0){
-      navigate('/login');
-    }
-  }, [navigate, user]);
+
+  if (Object.keys(user.data).length === 0) {
+    return <LoginRequiredAlert />;
+  }
+
   return (
     <div className='container pt-[20px] px-4'>
       <div className='flex mt-4 gap-[20px] items-center mb-[30px]'>
@@ -32,7 +31,9 @@ function User() {
         />
         <div className='flex flex-col gap-[5px]'>
           <span className='text-[20px]'>{user?.data?.name}</span>
-          <span className='text-[14px] text-[#808080]'>{user?.data?.email}</span>
+          <span className='text-[14px] text-[#808080]'>
+            {user?.data?.email}
+          </span>
         </div>
       </div>
       <Link

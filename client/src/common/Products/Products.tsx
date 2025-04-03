@@ -2,11 +2,9 @@ import { Button } from '@mui/material';
 import 'animate.css';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import noProduct from '../../assets/images/noProducts.png';
 import { ProductProp } from '../../types/product';
-import { ProductSkeleton, ProductItem } from '../index';
-import { useAppDispatch } from '../../store/root/hooks';
-import noProduct from '../../assets/images/noProducts.png'; 
-import { productDetailActions } from '../../store/productDetail/slice';
+import { ProductItem, ProductSkeleton } from '../index';
 
 function Products({
   title,
@@ -21,11 +19,10 @@ function Products({
   status: string;
   showMore?: boolean;
 }) {
-  const dispatch = useAppDispatch();
-  const handleSetProductDetail = (item: ProductProp) => {
-    dispatch(productDetailActions.onSetProductDetail(item));
-  };
-  if(status === 'failed' || (status === 'succeeded' && products.length === 0)) {
+  if (
+    status === 'failed' ||
+    (status === 'succeeded' && products.length === 0)
+  ) {
     return (
       <img
         className='mx-auto'
@@ -50,7 +47,6 @@ function Products({
             <ProductItem
               key={uuid()}
               item={item}
-              onSetProductDetail={handleSetProductDetail}
             />
           ))
         )}

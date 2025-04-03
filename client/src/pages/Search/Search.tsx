@@ -3,7 +3,6 @@ import throttle from 'lodash/throttle';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { ProductItem, ProductSkeleton, SearchSuggest } from '../../common';
-import { productDetailActions } from '../../store/productDetail/slice';
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
 import {
   searchActions,
@@ -36,10 +35,6 @@ function Search() {
     1000,
     { leading: false, trailing: true }
   );
-
-  const handleSetProductDetail = (item: any) => {
-    dispatch(productDetailActions.onSetProductDetail(item));
-  };
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
@@ -90,7 +85,6 @@ function Search() {
                 setOpen(false);
                 dispatch(searchActions.searchGetProducts());
               }}
-              onSetProductDetail={handleSetProductDetail}
             />
           )}
         </div>
@@ -106,7 +100,6 @@ function Search() {
             <ProductItem
               key={uuid()}
               item={product}
-              onSetProductDetail={handleSetProductDetail}
             />
           ))
         )}

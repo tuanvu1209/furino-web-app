@@ -62,6 +62,7 @@ function CategoryForm({
         <FormGroup>
           {data.data.map((item: any) => (
             <FormControlLabel
+              key={item.categoryId}
               control={
                 <Checkbox
                   disabled={productStatus === 'loading'}

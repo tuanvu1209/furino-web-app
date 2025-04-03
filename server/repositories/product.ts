@@ -51,59 +51,23 @@ const getProducts = async (
       attributes: [
         'productId',
         'name',
-        'description',
-        'quantity',
-        [
-          sequelize.fn(
-            'to_char',
-            sequelize.col('createdAt'),
-            'YYYY-MM-DD HH24:MI:SS'
-          ),
-          'createdAt',
-        ],
-        [
-          sequelize.fn(
-            'to_char',
-            sequelize.col('updatedAt'),
-            'YYYY-MM-DD HH24:MI:SS'
-          ),
-          'updatedAt',
-        ],
       ],
       include: [
         {
           model: ProductCategory,
           where: whereCategory,
           attributes: ['categoryId'],
-          include: [
-            {
-              model: Category,
-              attributes: ['name', 'image'],
-            },
-          ],
         },
         {
           model: ProductInventory,
-          attributes: ['quantity', 'sold', 'price', 'priceDiscount'],
-          order: [['productSizeId', 'ASC']],
-          include: [
-            {
-              model: ProductSize,
-              attributes: ['productSizeId', 'name'],
-            },
-            {
-              model: ProductColor,
-              attributes: ['productColorId', 'hex', 'name'],
-            },
-          ],
+          limit: 1,
+          attributes: ['price', 'priceDiscount'],
+          order: [['price', 'ASC']],
         },
         {
           model: ProductGeneralImage,
-          attributes: ['image', 'productGeneralImageId'],
-        },
-        {
-          model: ProductImage,
-          attributes: ['image', 'productColorId', 'productImageId'],
+          limit: 1,
+          attributes: ['image'],
         },
       ],
     });

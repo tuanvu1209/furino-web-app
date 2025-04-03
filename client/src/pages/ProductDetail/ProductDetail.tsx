@@ -36,7 +36,6 @@ function ProductDetail() {
   const [productItem, setProductItem] = useState<ProductInventoryProps>();
   const [imagePosition, setImagePosition] = useState(1);
 
-  const imageRefBody = React.useRef<HTMLDivElement>(null);
   const imageRef = React.useRef<HTMLImageElement>(null);
 
   const productId = useParams().id;
@@ -108,17 +107,16 @@ function ProductDetail() {
     setColor(newAlignment);
 
     if (newAlignment) {
-      imageRefBody.current?.scroll({
-        top:
-          imageRef.current?.getClientRects()[0].top ??
-          0 - imageRefBody.current?.getClientRects()[0].top,
-        behavior: 'smooth',
-      });
-
       setImage(
         product.data?.productImages.find(
           (item) => item.productColorId === Number(newAlignment)
         )?.image || ''
+      );
+
+      setImagePosition(
+        (product.data?.productImages.findIndex(
+          (item) => item.productColorId === Number(newAlignment)
+        ) || 0 + 1) as number
       );
 
       const newSizes = product.data?.productInventories
@@ -247,7 +245,6 @@ function ProductDetail() {
     }
   }, [color, product.data, size]);
 
-
   return (
     <div className='md:py-16 relative container px-4'>
       <div className='flex flex-col md:flex-row md:gap-10'>
@@ -262,10 +259,7 @@ function ProductDetail() {
                   className='hidden md:block aspect-square object-cover rounded-lg'
                 />
               </div>
-              <div
-                ref={imageRefBody}
-                className='hidden md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'
-              >
+              <div className='hidden md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'>
                 {Array.from({ length: 2 }).map(() => (
                   <Skeleton
                     key={uuidv4()}
@@ -356,13 +350,10 @@ function ProductDetail() {
                 <img
                   src={image}
                   alt='product.data'
-                  className='w-full hidden md:block aspect-square object-cover rounded-lg'
+                  className='w-full aspect-square object-cover rounded-lg'
                 />
               </div>
-              <div
-                ref={imageRefBody}
-                className='flex md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'
-              >
+              <div className='hidden md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'>
                 {images.map((item) => (
                   <img
                     key={uuidv4()}
@@ -380,8 +371,10 @@ function ProductDetail() {
                 <IconButton
                   disabled={imagePosition === 1}
                   onClick={() => {
-                    if (!imageRefBody.current) return;
-                    imageRefBody.current.scrollLeft -= 400;
+                    setImage(
+                      product.data?.productImages[imagePosition - 2]
+                        ?.image as string
+                    );
                     setImagePosition(imagePosition - 1);
                   }}
                 >
@@ -403,8 +396,10 @@ function ProductDetail() {
                 <span className='text-[#7D7D7D]'>{`${imagePosition}/${images.length}`}</span>
                 <IconButton
                   onClick={() => {
-                    if (!imageRefBody.current) return;
-                    imageRefBody.current.scrollLeft += 400;
+                    setImage(
+                      product.data?.productImages[imagePosition]
+                        ?.image as string
+                    );
                     setImagePosition(imagePosition + 1);
                   }}
                   disabled={imagePosition === images.length}
@@ -477,7 +472,9 @@ function ProductDetail() {
                   Add To Cart
                 </LoadingButton>
 
-                <div className='border-b pb-10'>{product?.data?.description}</div>
+                <div className='border-b pb-10'>
+                  {product?.data?.description}
+                </div>
 
                 <div className='flex flex-col gap-3'>
                   <div className='flex'>

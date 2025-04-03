@@ -2,7 +2,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectHiddenNavHeader } from '../../store/common/slice';
 import {
@@ -12,7 +11,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
 import { selectUser } from '../../store/user/slice';
 import { links } from '../../types/navBar';
-import useSocket from '../../utils/hooks/useSocket';
 
 export default function BottomNavigationCustom() {
   const navigate = useNavigate();
@@ -26,28 +24,8 @@ export default function BottomNavigationCustom() {
     setValue(location.pathname);
   }, [location]);
 
-  const socket = useSocket('http://localhost:3001');
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-
-  React.useEffect(() => {
-    if (!socket) return;
-    socket.on('orderUpdate', (data: any) => {
-      toast(data.title, {
-        icon: '👏',
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-        },
-      });
-      dispatch(notificationActions.getNotifications());
-    });
-
-    return () => {
-      socket.off('orderUpdate');
-    };
-  }, [dispatch, socket]);
 
   React.useEffect(() => {
     if (!user.data.userId) return;
