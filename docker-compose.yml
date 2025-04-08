@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   db:
-    image: postgres:15
+    image: postgres:17
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -12,15 +12,12 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # - ./init-db:/docker-entrypoint-initdb.d
+      - ./init-db:/docker-entrypoint-initdb.d
 
   server:
     build: ./server
     ports:
-      - 5000:5000
-      - 80:80
-      - 9229:9229
-      - 9230:9230
+      - 5050:5050
 
     volumes:
       - .:/usr/src/app
@@ -29,13 +26,14 @@ services:
       SALT_ROUNDS: ${SALT_ROUNDS}
       JWT_SECRET: ${JWT_SECRET}
       CLOUDINARY_URL: ${CLOUDINARY_URL}
+      PORT: 5050
 
   client:
     build: ./client
     ports:
       - "3000:3000"
     environment:
-      VITE_API_URL: http://localhost:80
+      VITE_API_URL: http://localhost:5050
       VITE_PROVINCE_URL: ${PROVINCE_URL}
       VITE_MAILER_URL: ${MAILER_URL}
     depends_on:

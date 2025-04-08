@@ -21,7 +21,7 @@ function Products({
 }) {
   if (
     status === 'failed' ||
-    (status === 'succeeded' && products.length === 0)
+    (status === 'succeeded' && products?.length === 0)
   ) {
     return (
       <img
@@ -43,7 +43,7 @@ function Products({
         (status === 'loading' && products.length === 0) ? (
           <ProductSkeleton limit={limit} />
         ) : (
-          products.map((item) => (
+          products?.map((item) => (
             <ProductItem
               key={uuid()}
               item={item}

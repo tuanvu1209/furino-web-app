@@ -56,6 +56,7 @@ export const relationship = () => {
   Cart.belongsTo(Product, { foreignKey: 'productId' });
   Cart.belongsTo(ProductColor, { foreignKey: 'productColorId' });
   Cart.belongsTo(ProductSize, { foreignKey: 'productSizeId' });
+  Cart.belongsTo(User, { foreignKey: 'userId' });
 
   User.belongsTo(Role, { foreignKey: 'roleId' });
   User.hasMany(Cart, { foreignKey: 'userId' });
@@ -76,18 +77,18 @@ export const relationship = () => {
   Notification.belongsTo(User, { foreignKey: 'userId' });
   Notification.belongsTo(Order, { foreignKey: 'orderId' });
 
-  Role.sync({ force: true});
-  User.sync({ force: true});
-  Category.sync({ force: true});
-  ProductColor.sync({ force: true});
-  ProductSize.sync({ force: true});
-  Product.sync({ force: true});
-  ProductCategory.sync({ force: true});
-  ProductGeneralImage.sync({ force: true});
-  ProductImage.sync({ force: true});
-  ProductInventory.sync({ force: true});
-  Cart.sync({ force: true});
-  Order.sync({ force: true});
-  OrderItem.sync({ force: true});
-  Notification.sync({ force: true});
+  Role.sync({ force: false});
+  User.sync({ force: false});
+  Category.sync({ force: false});
+  ProductColor.sync({ force: false});
+  ProductSize.sync({ force: false});
+  Product.sync({ force: false});
+  ProductCategory.sync({ force: false});
+  ProductGeneralImage.sync({ force: false});
+  ProductImage.sync({ force: false});
+  ProductInventory.sync({ force: false});
+  Cart.sync({ force: false});
+  Order.sync({ force: false});
+  OrderItem.sync({ force: false});
+  Notification.sync({ force: false});
 };

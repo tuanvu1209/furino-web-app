@@ -1,5 +1,3 @@
-import { banner, backgroundShop1, backgroundShop2 } from '../../assets/images';
-
 interface BannerModal {
   id: number;
   image: string;
@@ -12,7 +10,7 @@ interface BannerModal {
 export const data: BannerModal[] = [
   {
     id: 1,
-    image: banner,
+    image: 'https://res.cloudinary.com/dpjmvy4ij/image/upload/v1744092885/banner_ywnyrv.jpg',
     title: 'Discover Our New Collection',
     supTitle: 'New Arrival',
     description:
@@ -21,7 +19,7 @@ export const data: BannerModal[] = [
   },
   {
     id: 2,
-    image: backgroundShop1,
+    image: 'https://res.cloudinary.com/dpjmvy4ij/image/upload/v1744092885/background-1_erhwqk.jpg',
     title: 'Explore Our Summer Collection',
     supTitle: 'Summer Special',
     description:
@@ -30,7 +28,7 @@ export const data: BannerModal[] = [
   },
   {
     id: 3,
-    image: backgroundShop2,
+    image: 'https://res.cloudinary.com/dpjmvy4ij/image/upload/v1744092884/background-2_y6bwms.jpg',
     title: 'Unveiling Our Winter Collection',
     supTitle: 'Winter Arrival',
     description:

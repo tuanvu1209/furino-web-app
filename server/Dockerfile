@@ -10,6 +10,6 @@ RUN yarn global add nodemon
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 5050
 
 CMD ["nodemon", "server.ts"]
