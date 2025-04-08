@@ -2,7 +2,6 @@ import { print, OutputType } from "../helpers/print";
 import Exception from '../exceptions/Exception';
 import * as dotenv from 'dotenv'
 import pkg from 'pg';
-import { relationship } from '../models/relationship';
 
 const { Pool } = pkg;
 dotenv.config()
@@ -13,7 +12,6 @@ const pool = new Pool({
 
 async function connect() {
   try {
-    await relationship();
     await pool.connect();
     print('Connected to PostgreSQL', OutputType.SUCCESS);
   } catch (error) {

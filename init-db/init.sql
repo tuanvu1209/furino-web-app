@@ -37,42 +37,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- Name: cartItems; Type: TABLE; Schema: public; Owner: admin
---
-
-CREATE TABLE public."cartItems" (
-    "cartItemId" integer NOT NULL,
-    "cartId" integer NOT NULL,
-    "productId" integer NOT NULL,
-    quantity integer NOT NULL,
-    "colorId" integer NOT NULL
-);
-
-
-ALTER TABLE public."cartItems" OWNER TO admin;
-
---
--- Name: cartItems_cartItemId_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
-CREATE SEQUENCE public."cartItems_cartItemId_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public."cartItems_cartItemId_seq" OWNER TO admin;
-
---
--- Name: cartItems_cartItemId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
-ALTER SEQUENCE public."cartItems_cartItemId_seq" OWNED BY public."cartItems"."cartItemId";
-
 
 --
 -- Name: carts; Type: TABLE; Schema: public; Owner: admin
@@ -145,41 +109,6 @@ ALTER SEQUENCE public."categories_categoryId_seq" OWNER TO admin;
 --
 
 ALTER SEQUENCE public."categories_categoryId_seq" OWNED BY public.categories."categoryId";
-
-
---
--- Name: colors; Type: TABLE; Schema: public; Owner: admin
---
-
-CREATE TABLE public.colors (
-    "colorId" integer NOT NULL,
-    name character varying(255) NOT NULL,
-    hex character varying(255) NOT NULL
-);
-
-
-ALTER TABLE public.colors OWNER TO admin;
-
---
--- Name: colors_colorId_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
-CREATE SEQUENCE public."colors_colorId_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public."colors_colorId_seq" OWNER TO admin;
-
---
--- Name: colors_colorId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
-ALTER SEQUENCE public."colors_colorId_seq" OWNED BY public.colors."colorId";
 
 
 --
@@ -635,13 +564,6 @@ ALTER SEQUENCE public."users_userId_seq" OWNED BY public.users."userId";
 
 
 --
--- Name: cartItems cartItemId; Type: DEFAULT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."cartItems" ALTER COLUMN "cartItemId" SET DEFAULT nextval('public."cartItems_cartItemId_seq"'::regclass);
-
-
---
 -- Name: carts cartId; Type: DEFAULT; Schema: public; Owner: admin
 --
 
@@ -653,13 +575,6 @@ ALTER TABLE ONLY public.carts ALTER COLUMN "cartId" SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.categories ALTER COLUMN "categoryId" SET DEFAULT nextval('public."categories_categoryId_seq"'::regclass);
-
-
---
--- Name: colors colorId; Type: DEFAULT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public.colors ALTER COLUMN "colorId" SET DEFAULT nextval('public."colors_colorId_seq"'::regclass);
 
 
 --
@@ -746,13 +661,6 @@ ALTER TABLE ONLY public.roles ALTER COLUMN "roleId" SET DEFAULT nextval('public.
 ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public."users_userId_seq"'::regclass);
 
 
---
--- Data for Name: cartItems; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public."cartItems" ("cartItemId", "cartId", "productId", quantity, "colorId") FROM stdin;
-\.
-
 
 --
 -- Data for Name: carts; Type: TABLE DATA; Schema: public; Owner: admin
@@ -771,14 +679,6 @@ COPY public.categories ("categoryId", name, image) FROM stdin;
 14	Table	https://res.cloudinary.com/dpjmvy4ij/image/upload/v1712235551/category/table.png
 15	Chair	https://res.cloudinary.com/dpjmvy4ij/image/upload/v1712235530/category/chair.png
 16	Bed	https://res.cloudinary.com/dpjmvy4ij/image/upload/v1715333368/category/bed_j5o5cr.png
-\.
-
-
---
--- Data for Name: colors; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY public.colors ("colorId", name, hex) FROM stdin;
 \.
 
 
@@ -1470,13 +1370,6 @@ SELECT pg_catalog.setval('public."roles_roleId_seq"', 1, false);
 SELECT pg_catalog.setval('public."users_userId_seq"', 3, true);
 
 
---
--- Name: cartItems cartItems_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."cartItems"
-    ADD CONSTRAINT "cartItems_pkey" PRIMARY KEY ("cartItemId");
-
 
 --
 -- Name: carts carts_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
@@ -1492,14 +1385,6 @@ ALTER TABLE ONLY public.carts
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY ("categoryId");
-
-
---
--- Name: colors colors_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public.colors
-    ADD CONSTRAINT colors_pkey PRIMARY KEY ("colorId");
 
 
 --
@@ -1596,30 +1481,6 @@ ALTER TABLE ONLY public.roles
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY ("userId");
-
-
---
--- Name: cartItems cartItems_cartId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."cartItems"
-    ADD CONSTRAINT "cartItems_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES public.carts("cartId") ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: cartItems cartItems_colorId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."cartItems"
-    ADD CONSTRAINT "cartItems_colorId_fkey" FOREIGN KEY ("colorId") REFERENCES public.colors("colorId") ON UPDATE CASCADE;
-
-
---
--- Name: cartItems cartItems_productId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."cartItems"
-    ADD CONSTRAINT "cartItems_productId_fkey" FOREIGN KEY ("productId") REFERENCES public.products("productId") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
