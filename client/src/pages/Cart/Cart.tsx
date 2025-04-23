@@ -54,12 +54,12 @@ function Cart() {
     navigate('/checkout');
   };
 
-  // useEffect(() => {
-  //   if (carts.status === 'idle') {
-  //     dispatch(cartActions.getCarts());
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    if (carts.status === 'idle') {
+      dispatch(cartActions.getCarts());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (selectAll) {
