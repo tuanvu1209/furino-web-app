@@ -2,26 +2,46 @@ import { Button } from '@mui/material';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+// Dán SVG component này vào cùng file hoặc import riêng nếu bạn tách nó ra
+const AnimatedCheckmark = () => (
+  <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+    <motion.circle
+      cx="60"
+      cy="60"
+      r="55"
+      stroke="#2baf2b"
+      strokeWidth="10"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.8 }}
+    />
+    <motion.path
+      d="M40 65L55 80L85 50"
+      stroke="#2baf2b"
+      strokeWidth="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.6, delay: 0.8 }}
+    />
+  </svg>
+);
 
 const OrderSuccessPage = () => {
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-white text-center px-4">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.6, type: 'spring' }}
-        className="text-green-500 mb-6"
-      >
-        <CheckCircleIcon style={{ fontSize: 100 }} />
-      </motion.div>
+      <div className="mb-6">
+        <AnimatedCheckmark />
+      </div>
 
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
+        transition={{ delay: 1, duration: 0.5 }}
         className="text-2xl font-semibold mb-2"
       >
         Order Confirmed!
@@ -30,7 +50,7 @@ const OrderSuccessPage = () => {
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
+        transition={{ delay: 1.1, duration: 0.5 }}
         className="text-gray-600"
       >
         Thank you for your purchase!
@@ -39,7 +59,7 @@ const OrderSuccessPage = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 1.3 }}
       >
         <Button
           sx={{
@@ -67,5 +87,4 @@ const OrderSuccessPage = () => {
   );
 };
 
-const MemoizedOrderSuccessPage = React.memo(OrderSuccessPage);
-export default MemoizedOrderSuccessPage;
+export default React.memo(OrderSuccessPage);
