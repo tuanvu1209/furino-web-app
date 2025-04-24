@@ -70,7 +70,7 @@ export const notificationActions = {
     async (_, thunkAPI) => {
       const user: any = selectUser(thunkAPI.getState() as RootState);
       
-      if (user.data.userId) {
+      if (user.data.userId !== undefined) {
         const response = await ipaCall(
           'GET',
           `${BASE_URL}/notifications/${user.data.userId}`,

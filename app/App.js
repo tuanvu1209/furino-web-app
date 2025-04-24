@@ -10,7 +10,8 @@ export default function App() {
     const fetchMetroIp = () => {
       if (__DEV__) {
         const debuggerHost =
-          Constants.manifest?.debuggerHost || Constants.manifest2?.extra?.expoGo?.debuggerHost;
+          Constants.manifest?.debuggerHost ||
+          Constants.manifest2?.extra?.expoGo?.debuggerHost;
         const metroIp = debuggerHost?.split(':')[0];
         console.log('Fetched Metro IP Address:', metroIp);
         setIp(metroIp);
@@ -22,7 +23,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text>{ip}</Text>
       {ip ? (
         <WebView
           style={styles.webView}
