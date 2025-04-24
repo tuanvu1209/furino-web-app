@@ -244,14 +244,15 @@ function Checkout() {
                 }
               />
               <ComboBox
+                value={provinceSelected.province?.provinceName}
                 error={error}
                 sx={{ width: '100%' }}
                 label='Province'
                 list={
                   provinces.status === 'succeeded'
                     ? provinces.data.map((province: any) => ({
-                        label: province.province_name,
-                        province_id: province.province_id,
+                        label: province.name,
+                        province_id: province.code,
                       }))
                     : []
                 }
@@ -264,14 +265,15 @@ function Checkout() {
                 }}
               />
               <ComboBox
+                value={provinceSelected.district?.districtName}
                 error={error}
                 sx={{ width: '100%' }}
                 label='District'
                 list={
                   districts.status === 'succeeded'
                     ? districts.data.map((district: any) => ({
-                        label: district.district_name,
-                        district_id: district.district_id,
+                        label: district.name,
+                        district_id: district.code,
                       }))
                     : []
                 }
@@ -284,14 +286,15 @@ function Checkout() {
                 }}
               />
               <ComboBox
+                value={provinceSelected.ward?.wardName}
                 error={error}
                 sx={{ width: '100%' }}
                 label='Ward'
                 list={
                   wards.status === 'succeeded'
                     ? wards.data.map((ward: any) => ({
-                        label: ward.ward_name,
-                        ward_id: ward.ward_id,
+                        label: ward.name,
+                        ward_id: ward.code,
                       }))
                     : []
                 }

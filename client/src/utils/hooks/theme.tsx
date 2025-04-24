@@ -6,23 +6,22 @@ export const theme = createTheme({
   },
   components: {
     MuiButton: {
-      styleOverrides: {
-        root: {
-          fontSize: '16px',
-          fontWeight: 400,
-          padding: '16px 40px',
-          textTransform: 'capitalize',
-        },
-        outlined: {
-          border: '1px solid black',
-          color: 'black',
-          '&:hover': {
-            color: {xs: 'black', md:'white'},
-            backgroundColor: {md:'black', xs: 'white'},
-            borderColor: 'black',
-          },
-        },
-      },
+      // styleOverrides: {
+      //   root: {
+      //     fontSize: '16px',
+      //     fontWeight: 400,
+      //     textTransform: 'capitalize',
+      //   },
+      //   outlined: {
+      //     border: '1px solid black',
+      //     color: 'black',
+      //     '&:hover': {
+      //       color: {xs: 'black', md:'white'},
+      //       backgroundColor: {md:'black', xs: 'white'},
+      //       borderColor: 'black',
+      //     },
+      //   },
+      // },
     },
   },
   palette: {

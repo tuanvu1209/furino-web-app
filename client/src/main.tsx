@@ -8,14 +8,17 @@ import Routers from './Routers/Routers.tsx';
 import './index.css';
 import { store } from './store/root/config.store.ts';
 import { theme } from './utils/hooks/theme.tsx';
+import { ConfirmProvider } from './common/ConfirmContext/ConfirmContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Toaster />
-          <Routers />
+          <ConfirmProvider>
+            <Toaster />
+            <Routers />
+          </ConfirmProvider>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

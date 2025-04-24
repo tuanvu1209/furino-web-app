@@ -1,5 +1,4 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { v4 as uuid } from 'uuid';
 import noProduct from '../../assets/images/noProducts.png';
 import { ProductProp } from '../../types/product';
 import { ProductItem, ProductSkeleton } from '../index';
@@ -57,7 +56,7 @@ function ProductListShop({
           ) : (
             products?.map((item) => (
               <ProductItem
-                key={uuid()}
+                key={item.productId}
                 item={item}
               />
             ))

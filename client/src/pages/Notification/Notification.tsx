@@ -1,21 +1,26 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
-import { HeadingPage } from '../../common';
+import { HeadingPage, LoginRequiredAlert } from '../../common';
 import {
   notificationActions,
   selectNotifications,
 } from '../../store/notification/slice';
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
+import { selectUser } from '../../store/user/slice';
 
 function Notification() {
   const dispatch = useAppDispatch();
   const notifications = useAppSelector(selectNotifications);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(notificationActions.getNotifications());
   }, [dispatch]);
-  
+
+  if (Object.keys(user.data).length === 0) {
+    return <LoginRequiredAlert />;
+  }
+
   return (
     <div className='container'>
       <div className='px-4'>
@@ -33,7 +38,7 @@ function Notification() {
             className={`grid grid-cols-12 border-b py-4 px-4 ${
               item.read && 'bg-[#e3dfdf]'
             }`}
-            key={uuid()}
+            key={item.orderId}
           >
             <img
               src={item?.image}

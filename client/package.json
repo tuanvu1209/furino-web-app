@@ -29,6 +29,7 @@
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
+    "lucide-react": "^0.503.0",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-cookie": "^7.1.4",

@@ -1,13 +1,12 @@
 import 'animate.css';
 import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 import { ProductProp } from '../../types/product';
 
 function ProductItem({ item }: { item: ProductProp }) {
   return (
     <Link
       to={`/shop/product/${item.productId}`}
-      key={uuid()}
+      key={item.productId}
       className='flex flex-col relative group rounded'
     >
       <div className='group-hover:shadow-xl overflow-hidden transition-all duration-300 relative z-20'>

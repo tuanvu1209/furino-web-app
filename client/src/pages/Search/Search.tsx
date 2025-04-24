@@ -98,7 +98,7 @@ function Search() {
         ) : (
           products.data.map((product: any) => (
             <ProductItem
-              key={uuid()}
+              key={product.productId}
               item={product}
             />
           ))

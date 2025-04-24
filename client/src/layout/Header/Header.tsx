@@ -120,7 +120,7 @@ const Header = () => {
             <div className='grid grid-cols-3 items-center'>
               <Link
                 to='/'
-                className='col-start-2 flex col-span-1 font-[monospace] md:col-start-1 items-center text-[27px] font-semibold letter-spacing-[0.3rem] text-black hover:text-black hover:no-underline'
+                className='col-start-2 justify-center flex col-span-1 font-[monospace] md:col-start-1 items-center text-[27px] font-semibold letter-spacing-[0.3rem] text-black hover:text-black hover:no-underline'
               >
                 FURINO
               </Link>
@@ -204,7 +204,7 @@ const Header = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {!user.data.userId ? (
+                  {Object.keys(user.data).length === 0 ? (
                     <MenuItem onClick={handleCloseUserMenu}>
                       <Link to='/login'>Login</Link>
                     </MenuItem>

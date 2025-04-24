@@ -34,8 +34,14 @@ export default function AlertDialog({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Disagree</Button>
           <Button
+            variant='contained'
+            onClick={onClose}
+          >
+            Disagree
+          </Button>
+          <Button
+            color='error'
             onClick={() => {
               onConfirm();
               onClose();

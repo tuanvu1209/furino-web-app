@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { CartEmpty, HeadingPage } from '../../common';
+import { CartEmpty, HeadingPage, LoginRequiredAlert } from '../../common';
 import QuantityInput from '../../common/QuantityInput/QuantityInput';
 import {
   cartActions,
@@ -16,6 +16,7 @@ import {
   selectCarts,
 } from '../../store/cart/slice';
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
+import { selectUser } from '../../store/user/slice';
 
 function Cart() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ function Cart() {
 
   const carts = useAppSelector(selectCarts);
   const actions = useAppSelector(selectActions);
+  const user = useAppSelector(selectUser);
 
   const handleChangeQuantity = (event: any, cartId: number) => {
     dispatch(cartActions.onHandleUpdateCart({ cartId, quantity: event }));
@@ -55,7 +57,9 @@ function Cart() {
   };
 
   useEffect(() => {
-    if (carts.status === 'idle') {
+    if (carts.status === 'idle' && Object.keys(user.data).length !== 0) {
+      console.log('get carts');
+      
       dispatch(cartActions.getCarts());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,6 +75,10 @@ function Cart() {
 
   if (carts.status === 'succeeded' && carts.data.length === 0 || carts.status === 'failed') {
     return <CartEmpty />;
+  }
+
+  if (Object.keys(user.data).length === 0) {
+    return <LoginRequiredAlert />;
   }
 
   return (

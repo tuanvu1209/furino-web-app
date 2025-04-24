@@ -23,7 +23,7 @@ export default function ComboBox({
   return (
     <Autocomplete
       disablePortal 
-      value={value}
+      value={value ? value : ''}
       onChange={(_event, newValue) => onChange(newValue)}
       id='combo-box-demo'
       options={list}

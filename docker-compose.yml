@@ -9,10 +9,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
+    command: >
+      postgres -c listen_addresses='*'
 
   server:
     build: ./server
@@ -33,7 +35,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      VITE_API_URL: http://localhost:5050
+      VITE_API_URL: http://${IP_ADDRESS}:5050
       VITE_PROVINCE_URL: ${PROVINCE_URL}
       VITE_MAILER_URL: ${MAILER_URL}
     depends_on:

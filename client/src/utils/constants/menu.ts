@@ -4,7 +4,7 @@ export const sorts = ['default', 'price', 'name'];
 export const settings = [
   {
     name: 'Profile',
-    path: '/profile',
+    path: '/user',
   },
   {
     name: 'Order',

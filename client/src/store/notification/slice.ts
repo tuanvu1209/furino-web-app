@@ -69,13 +69,16 @@ export const notificationActions = {
     `${notificationSlice.name}/getNotifications`,
     async (_, thunkAPI) => {
       const user: any = selectUser(thunkAPI.getState() as RootState);
-      const response = await ipaCall(
-        'GET',
-        `${BASE_URL}/notifications/${user.data.userId}`,
-        true
-      );
+      
+      if (user.data.userId) {
+        const response = await ipaCall(
+          'GET',
+          `${BASE_URL}/notifications/${user.data.userId}`,
+          true
+        );
 
-      return response;
+        return response;
+      }
     }
   ),
   addNotification: createAction<NotificationProp>(

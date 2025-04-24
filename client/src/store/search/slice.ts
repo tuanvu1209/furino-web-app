@@ -97,7 +97,7 @@ export const searchActions = {
         const response = await ipaCall(
           'GET',
           `${BASE_URL}/products/search/${keyword}`,
-          true,
+          false,
           {
             limit,
           }

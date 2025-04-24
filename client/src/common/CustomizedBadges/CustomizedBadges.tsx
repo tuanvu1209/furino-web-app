@@ -13,9 +13,9 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   },
 }));
 
-export default function CustomizedBadges({ total, token, ...props }: any) {
+export default function CustomizedBadges({ total, ...props }: any) {
   return (
-    <Link to={token ? '/cart' : '/login'}>
+    <Link to={'/cart'}>
       <IconButton
         aria-label='cart'
         {...props}

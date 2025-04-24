@@ -1,6 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IconButton, Skeleton } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import productNotFound from '../../assets/images/noProducts.png';
@@ -20,6 +20,7 @@ import {
   ProductSize,
 } from '../../types/product';
 import checkTokenExistence from '../../utils/hooks/checkToken';
+import { useConfirm } from '../../common/ConfirmContext/ConfirmContext';
 
 function ProductDetail() {
   const [size, setSize] = useState('');
@@ -40,6 +41,7 @@ function ProductDetail() {
 
   const productId = useParams().id;
   const dispatch = useAppDispatch();
+  const confirm = useConfirm();
 
   const status = useAppSelector(selectActions);
 
@@ -157,10 +159,21 @@ function ProductDetail() {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!product.data) return;
     if (!size || !color) return;
-    checkTokenExistence();
+
+    if (!checkTokenExistence(false)) {
+      const ok = await confirm({
+        message: 'You need to log in to perform this action?',
+      });
+
+      if (ok) {
+        window.location.href = '/login';
+      }
+      return;
+    }
+
     const cartData = {
       productId: product.data.productId,
       productSizeId: Number(size),
@@ -171,10 +184,7 @@ function ProductDetail() {
   };
 
   useEffect(() => {
-    if (!product.data || product.status === 'idle') {
-      dispatch(productDetailActions.getProduct(Number(productId)));
-      return;
-    }
+    dispatch(productDetailActions.getProduct(Number(productId)));
     dispatch(productDetailActions.getProductSuggestions(Number(productId)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -230,7 +240,7 @@ function ProductDetail() {
       setImages(uniqueImages);
       setImage(product.data.productGeneralImages[0]?.image);
     }
-  }, [dispatch, product.data]);
+  }, [product.data]);
 
   useEffect(() => {
     if (size && color && product.data) {
@@ -244,6 +254,25 @@ function ProductDetail() {
       }
     }
   }, [color, product.data, size]);
+
+  const renderedImages = useMemo(() => {
+    return images.map((item) => (
+      <img
+        style={{ outlineStyle: image === item.image ? 'solid' : '' }}
+        key={item.image}
+        src={item.image}
+        onClick={() => {
+          if (image !== item.image) {
+            setImage(item.image);
+          }
+        }}
+        alt='product.data'
+        className={`snap-center aspect-square col-span-1 md:h-auto object-cover rounded-sm cursor-pointer ${
+          image === item.image && 'outline-2 outline-solid outline-indigo-600'
+        }`}
+      />
+    ));
+  }, [images, image, setImage]);
 
   return (
     <div className='md:py-16 relative container px-4'>
@@ -353,19 +382,8 @@ function ProductDetail() {
                   className='w-full aspect-square object-cover rounded-lg'
                 />
               </div>
-              <div className='hidden md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'>
-                {images.map((item) => (
-                  <img
-                    key={uuidv4()}
-                    src={item.image}
-                    ref={imageRef}
-                    onClick={() => setImage(item.image)}
-                    alt='product.data'
-                    className={`snap-center aspect-square col-span-1 md:h-auto object-cover rounded-sm cursor-pointer ${
-                      image === item.image && 'md:border border-[#B88E2F]'
-                    }`}
-                  />
-                ))}
+              <div className='hidden p-2 md:snap-none overflow-hidden md:grid md:grid-cols-1 lg:grid-cols-2 gap-[10px] mt-[10px]'>
+                {renderedImages}
               </div>
               <div className='flex md:hidden items-center p-3 w-[138px] justify-between mx-auto mt-3 mb-10'>
                 <IconButton

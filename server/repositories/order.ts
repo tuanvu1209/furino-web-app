@@ -345,9 +345,25 @@ const updateOrder = async ({
   }
 };
 
+const getTotalByUserId = async (userId: number) => {
+  try {
+    const orders: any = await Order.findAll({
+      where: {
+        userId,
+      },
+    });
+    const total = orders.length;
+
+    return total;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
 export default {
   insertOrder,
   getOrderByUserId,
   getOrderById,
   updateOrder,
+  getTotalByUserId,
 };

@@ -58,7 +58,7 @@ export default function BottomNavigationCustom() {
               label={link.name}
               value={link.path}
               icon={
-                link.name === 'Notification' ? (
+                link.name === 'Notification' && notification.count ? (
                   <div style={{ position: 'relative' }}>
                     <link.icon />
                     <span

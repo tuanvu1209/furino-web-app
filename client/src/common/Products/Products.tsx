@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import 'animate.css';
 import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 import noProduct from '../../assets/images/noProducts.png';
 import { ProductProp } from '../../types/product';
 import { ProductItem, ProductSkeleton } from '../index';
@@ -45,7 +44,7 @@ function Products({
         ) : (
           products?.map((item) => (
             <ProductItem
-              key={uuid()}
+              key={item.productId}
               item={item}
             />
           ))

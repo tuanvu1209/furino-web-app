@@ -43,6 +43,7 @@ export const userSlice = createSlice({
           token: '',
         },
       };
+      window.location.href = '/';
     },
   },
   extraReducers: (builder) => {

@@ -111,7 +111,7 @@ function OrderDetail() {
               {data.orderItems &&
                 data.orderItems.map((orderItem: any) => (
                   <div
-                    key={uuid()}
+                    key={orderItem.orderId}
                     className='flex gap-7 p-4 border-b-4 border-[#F0F0F0]'
                   >
                     <img

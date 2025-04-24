@@ -50,9 +50,8 @@ export const productDetailSlice = createSlice({
         state.product.status = 'succeeded';
         state.product.data = action.payload;
       })
-      .addCase(productDetailActions.getProduct.rejected, (state, action) => {
+      .addCase(productDetailActions.getProduct.rejected, (state) => {
         state.product.status = 'failed';
-        state.product.error = action.payload as string;
       })
       .addCase(productDetailActions.getProductSuggestions.pending, (state) => {
         state.productSuggestion.status = 'loading';
@@ -99,12 +98,12 @@ export const productDetailActions = {
     `${productDetailSlice.name}/getProductSuggestions`,
     async (productId: number, thunkAPI) => {
       try {
-        const product = await ipaCall('GET', `${BASE_URL}/products`, false, {
+        const products = await ipaCall('GET', `${BASE_URL}/products`, false, {
           productId,
           limit: 4,
           page: 1,
         });
-        return product;
+        return products;
       } catch (e: any) {
         return thunkAPI.rejectWithValue(e.message.toString());
       }
