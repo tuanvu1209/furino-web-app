@@ -42,8 +42,6 @@ const Header = () => {
   //   const handleScroll = () => {
   //     const currentScrollPos = window.pageYOffset;
 
-  //     console.log(currentScrollPos);
-
   //     if (headerRef.current) {
   //       const isScrollingDown = currentScrollPos > lastScrollPos.current;
   //       window.requestAnimationFrame(() => {
@@ -113,7 +111,7 @@ const Header = () => {
     !hiddenNavHeader && (
       <header
         ref={headerRef}
-        className='top-0 h-[62px] fixed left-0 right-0 bg-white border-b z-[1000]'
+        className='top-0 fixed left-0 right-0 bg-white border-b z-[1000]'
       >
         <div>
           <div className='py-3 md:py-0 container px-4'>
@@ -131,7 +129,7 @@ const Header = () => {
                     sx={{ my: 2, color: 'white', display: 'block', padding: 0 }}
                   >
                     <Link
-                      className='text-black text-sm font-normal'
+                      className='text-black text-sm font-normal block'
                       to={page.path}
                     >
                       {page.title}
@@ -205,16 +203,25 @@ const Header = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {Object.keys(user.data).length === 0 ? (
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Link to='/login'>Login</Link>
+                    <MenuItem
+                      sx={{ padding: '0' }}
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Link
+                        className='block px-5 py-2'
+                        to='/login'
+                      >
+                        Login
+                      </Link>
                     </MenuItem>
                   ) : (
                     settings.map((setting) => (
                       <MenuItem
                         key={uuid()}
+                        sx={{ padding: '10px 0' }}
                         onClick={handleCloseUserMenu}
                       >
-                        <span onClick={() => handleUser(setting)}>
+                        <span className='px-5' onClick={() => handleUser(setting)}>
                           {setting.name}
                         </span>
                       </MenuItem>

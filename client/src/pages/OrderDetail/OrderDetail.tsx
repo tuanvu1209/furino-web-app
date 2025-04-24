@@ -154,14 +154,14 @@ function OrderDetail() {
             </div>
           </div>
           {data.orderStatus === 0 && (
-            <div className='text-center'>
+            <div className='text-center md:text-right'>
               <LoadingButton
                 variant='contained'
                 loading={statusUpdate.update === 'loading'}
                 onClick={() => {
                   setOpen(true);
                 }}
-                sx={{ width: '100%' }}
+                sx={{ width: { sx: '100%' } }}
               >
                 CANNEL ORDER
               </LoadingButton>

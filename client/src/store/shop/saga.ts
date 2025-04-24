@@ -10,7 +10,6 @@ export function* onGetProductOfShopPage(action: any): SagaIterator {
     yield put(shopActions.getProducts(action.payload));
   } catch (e: any) {
     if (e instanceof Error) {
-      console.log(e.message.toString());
       toast.error('Error while performing this operation');
     }
   }

@@ -213,7 +213,6 @@ export const checkoutSlice = createSlice({
       }) 
       .addCase(orderActions.onGetTotalOrder.fulfilled, (state, action) => {
         state.totalOrder.status = 'succeeded';
-        console.log(action);
         state.totalOrder.data = action.payload;
       })
       .addCase(orderActions.onGetTotalOrder.rejected, (state) => {
@@ -366,7 +365,7 @@ export const orderActions = {
       const response = await ipaCall(
         'GET',
         `${BASE_URL}/orders/total/${user.data.userId}`,
-        false
+        true
       );
 
       return response;

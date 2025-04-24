@@ -170,7 +170,6 @@ export const shopActions = {
         }
         return null;
       } catch (e: any) {
-        console.log(e);
         return thunkAPI.rejectWithValue(e.message.toString());
       }
     }
@@ -214,7 +213,6 @@ export const shopActions = {
         }
         return null;
       } catch (e: any) {
-        console.log(e);
         return thunkAPI.rejectWithValue(e.message.toString());
       }
     }

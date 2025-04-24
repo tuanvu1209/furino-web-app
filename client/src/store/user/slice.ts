@@ -16,7 +16,7 @@ const initialState: UserInitialState = {
   status: {
     login: 'idle',
     register: 'idle',
-  }
+  },
 };
 
 // slice
@@ -60,8 +60,12 @@ export const userSlice = createSlice({
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         document.cookie = `token=${token}; expires=${expirationDate}; path=/`;
+        const lastRedirect = localStorage.getItem('redirect') || '/';
+        if (lastRedirect) {
+          localStorage.removeItem('redirect');
+        }
         setTimeout(() => {
-          window.location.href = '/';
+          window.location.href = lastRedirect;
         }, 1000);
       })
       .addCase(userActions.loginUser.rejected, (state) => {

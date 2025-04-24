@@ -1,7 +1,6 @@
 import { TextField } from '@mui/material';
 import throttle from 'lodash/throttle';
 import { useEffect, useRef, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import { ProductItem, ProductSkeleton, SearchSuggest } from '../../common';
 import { useAppDispatch, useAppSelector } from '../../store/root/hooks';
 import {

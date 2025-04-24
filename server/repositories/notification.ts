@@ -52,7 +52,6 @@ const getNotifications = async ({ userId }: { userId: number }) => {
           });
 
           notification.image = productImage?.image;
-          console.log('Notification Image:', notification.image);
         }
       })
     );

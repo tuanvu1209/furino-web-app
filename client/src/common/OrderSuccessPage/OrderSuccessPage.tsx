@@ -1,38 +1,68 @@
 import { Button } from '@mui/material';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress } from '../../common';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const OrderSuccessPage = () => {
-  const progress = useMotionValue(90);
   const navigate = useNavigate();
 
   return (
-    <div className='flex flex-col justify-center items-center h-screen gap-2'>
+    <div className="flex flex-col justify-center items-center h-screen bg-white text-center px-4">
       <motion.div
-        initial={{ x: 0 }}
-        animate={{ x: 100 }}
-        style={{ x: progress }}
-        transition={{ duration: 1 }}
-      />
-      <CircularProgress progress={progress} />
-      <span className='text-[24px]'>Order Confirmed!</span>
-      <span>Thank you for your purchase!</span>
-      <Button
-        sx={{
-          textTransform: 'capitalize',
-          color: 'white',
-          backgroundColor: '#2baf2b',
-          marginTop: '20px',
-          '&:hover': {
-            backgroundColor: '#2baf2b',
-          },
-        }}
-        onClick={() => navigate('/shop', { replace: true })}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.6, type: 'spring' }}
+        className="text-green-500 mb-6"
       >
-        Continue Shopping
-      </Button>
+        <CheckCircleIcon style={{ fontSize: 100 }} />
+      </motion.div>
+
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="text-2xl font-semibold mb-2"
+      >
+        Order Confirmed!
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        className="text-gray-600"
+      >
+        Thank you for your purchase!
+      </motion.p>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+      >
+        <Button
+          sx={{
+            textTransform: 'none',
+            color: 'white',
+            backgroundColor: '#2baf2b',
+            mt: 4,
+            px: 4,
+            py: 1.5,
+            borderRadius: 2,
+            fontWeight: 500,
+            fontSize: 16,
+            '&:hover': {
+              backgroundColor: '#259425',
+              transform: 'scale(1.03)',
+              transition: '0.3s ease',
+            },
+          }}
+          onClick={() => navigate('/shop', { replace: true })}
+        >
+          Continue Shopping
+        </Button>
+      </motion.div>
     </div>
   );
 };

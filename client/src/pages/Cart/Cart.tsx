@@ -58,8 +58,6 @@ function Cart() {
 
   useEffect(() => {
     if (carts.status === 'idle' && Object.keys(user.data).length !== 0) {
-      console.log('get carts');
-      
       dispatch(cartActions.getCarts());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

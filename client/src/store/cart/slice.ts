@@ -216,8 +216,6 @@ export const cartActions = {
         );
         return response;
       } catch (e: any) {
-        console.log(e);
-
         return thunkAPI.rejectWithValue(e.response.data.toString());
       }
     }

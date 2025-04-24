@@ -37,8 +37,6 @@ function ProductDetail() {
   const [productItem, setProductItem] = useState<ProductInventoryProps>();
   const [imagePosition, setImagePosition] = useState(1);
 
-  const imageRef = React.useRef<HTMLImageElement>(null);
-
   const productId = useParams().id;
   const dispatch = useAppDispatch();
   const confirm = useConfirm();
@@ -109,17 +107,17 @@ function ProductDetail() {
     setColor(newAlignment);
 
     if (newAlignment) {
-      setImage(
-        product.data?.productImages.find(
-          (item) => item.productColorId === Number(newAlignment)
-        )?.image || ''
+      const productItemSelect = product.data?.productImages.find(
+        (item) => item.productColorId === Number(newAlignment)
       );
 
-      setImagePosition(
-        (product.data?.productImages.findIndex(
-          (item) => item.productColorId === Number(newAlignment)
-        ) || 0 + 1) as number
+      setImage(productItemSelect?.image as string);
+
+      const imageIndex = images.findIndex(
+        (item) => item.image === productItemSelect?.image
       );
+
+      setImagePosition(imageIndex + 1);
 
       const newSizes = product.data?.productInventories
         .map((item) => {
@@ -169,6 +167,7 @@ function ProductDetail() {
       });
 
       if (ok) {
+        localStorage.setItem('redirect', window.location.href);
         window.location.href = '/login';
       }
       return;
@@ -186,6 +185,7 @@ function ProductDetail() {
   useEffect(() => {
     dispatch(productDetailActions.getProduct(Number(productId)));
     dispatch(productDetailActions.getProductSuggestions(Number(productId)));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -221,6 +221,7 @@ function ProductDetail() {
           }, [])
           .sort((a, b) => (a.productColorId > b.productColorId ? 1 : -1))
       );
+
       const newImage = [
         ...product.data.productGeneralImages,
         ...product.data.productImages,
@@ -389,10 +390,8 @@ function ProductDetail() {
                 <IconButton
                   disabled={imagePosition === 1}
                   onClick={() => {
-                    setImage(
-                      product.data?.productImages[imagePosition - 2]
-                        ?.image as string
-                    );
+                    const newImage = images[imagePosition - 2]?.image as string;
+                    setImage(newImage);
                     setImagePosition(imagePosition - 1);
                   }}
                 >
@@ -414,10 +413,8 @@ function ProductDetail() {
                 <span className='text-[#7D7D7D]'>{`${imagePosition}/${images.length}`}</span>
                 <IconButton
                   onClick={() => {
-                    setImage(
-                      product.data?.productImages[imagePosition]
-                        ?.image as string
-                    );
+                    const newImage = images[imagePosition]?.image as string;
+                    setImage(newImage);
                     setImagePosition(imagePosition + 1);
                   }}
                   disabled={imagePosition === images.length}
@@ -484,8 +481,9 @@ function ProductDetail() {
                 </div>
                 <LoadingButton
                   onClick={handleAddToCart}
-                  variant='outlined'
+                  variant='contained'
                   loading={status.add === 'loading'}
+                  disabled={!color || !size}
                 >
                   Add To Cart
                 </LoadingButton>
