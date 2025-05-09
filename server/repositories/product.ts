@@ -48,10 +48,7 @@ const getProducts = async (
           : [[sort, 'ASC']],
       limit: limit,
       offset: (page - 1) * limit,
-      attributes: [
-        'productId',
-        'name',
-      ],
+      attributes: ['productId', 'name'],
       include: [
         {
           model: ProductCategory,
@@ -465,18 +462,12 @@ const searchProduct = async ({
     const products = await Product.findAll({
       limit: limit,
       order: [['name', 'ASC']],
-      where:{
+      where: {
         name: {
           [Op.iLike]: `%${keyword}%`,
         },
       },
-      attributes: [
-        'productId',
-        'name',
-        'description',
-        'quantity',
-        
-      ],
+      attributes: ['productId', 'name', 'description', 'quantity'],
       include: [
         {
           model: ProductCategory,
@@ -532,11 +523,7 @@ const getProductsWithDiscount = async ({
       limit: limit,
       offset: (page - 1) * limit,
       order: [['name', 'ASC']],
-      attributes: [
-        'productId',
-        'name',
-        'quantity',
-      ],
+      attributes: ['productId', 'name', 'quantity'],
       include: [
         {
           model: ProductCategory,
@@ -551,12 +538,6 @@ const getProductsWithDiscount = async ({
         {
           model: ProductInventory,
           attributes: ['quantity', 'sold', 'price', 'priceDiscount'],
-          order: [['productSizeId', 'ASC']],
-          where: {
-            priceDiscount: {
-              [Op.gt]: 0,
-            },
-          },
           include: [
             {
               model: ProductSize,
@@ -573,7 +554,27 @@ const getProductsWithDiscount = async ({
           attributes: ['image', 'productGeneralImageId'],
         },
       ],
-      subQuery: false,
+      where: {
+        [Op.and]: [
+          sequelize.literal(`EXISTS (
+            SELECT 1 FROM "productInventories" 
+            WHERE "productInventories"."productId" = "products"."productId" 
+            AND "productInventories"."priceDiscount" > 0
+          )`),
+        ],
+      },
+    });
+
+    // 👉 Sort productInventories within each product (priceDiscount DESC, nulls last)
+    const sortedProducts = products.map((product: any) => {
+      product.productInventories = product.productInventories.sort(
+        (a: any, b: any) => {
+          const aDiscount = a.priceDiscount ?? 0;
+          const bDiscount = b.priceDiscount ?? 0;
+          return bDiscount - aDiscount;
+        }
+      );
+      return product;
     });
 
     const count = await Product.count({
@@ -589,7 +590,7 @@ const getProductsWithDiscount = async ({
       ],
     });
 
-    return { data: products, count };
+    return { data: sortedProducts, count };
   } catch (exception: any) {
     throw new Error(exception.message);
   }
@@ -607,11 +608,7 @@ const getLatestProducts = async ({
       limit: limit,
       offset: (page - 1) * limit,
       order: [['createdAt', 'DESC']],
-      attributes: [
-        'productId',
-        'name',
-        'quantity',
-      ],
+      attributes: ['productId', 'name', 'quantity', 'createdAt'],
       include: [
         {
           model: ProductCategory,
