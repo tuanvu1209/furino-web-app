@@ -573,6 +573,11 @@ const getProductsWithDiscount = async ({
           attributes: ['image', 'productGeneralImageId'],
         },
       ],
+      where: {
+        '$productInventories.priceDiscount$': {
+          [Op.gt]: 0,
+        },
+      },
     });
 
     const count = await Product.count({
