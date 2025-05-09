@@ -43,7 +43,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.carts (
-    "cartId" integer NOT NULL,
+    "cartId" integer NOT NULL PRIMARY KEY,
     "userId" integer NOT NULL,
     "productId" integer NOT NULL,
     quantity integer NOT NULL,
@@ -81,7 +81,7 @@ ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
 --
 
 CREATE TABLE public.categories (
-    "categoryId" integer NOT NULL,
+    "categoryId" integer NOT NULL PRIMARY KEY,
     name character varying(255) NOT NULL,
     image character varying(255) NOT NULL
 );
@@ -116,7 +116,7 @@ ALTER SEQUENCE public."categories_categoryId_seq" OWNED BY public.categories."ca
 --
 
 CREATE TABLE public.notifications (
-    "notificationId" integer NOT NULL,
+    "notificationId" integer NOT NULL PRIMARY KEY,
     "userId" integer NOT NULL,
     "orderId" integer NOT NULL,
     title character varying(255) NOT NULL,
@@ -155,7 +155,7 @@ ALTER SEQUENCE public."notifications_notificationId_seq" OWNED BY public.notific
 --
 
 CREATE TABLE public."orderItems" (
-    "orderItemId" integer NOT NULL,
+    "orderItemId" integer NOT NULL PRIMARY KEY,
     "orderId" integer NOT NULL,
     "productId" integer NOT NULL,
     "productColorId" integer NOT NULL,
@@ -194,7 +194,7 @@ ALTER SEQUENCE public."orderItems_orderItemId_seq" OWNED BY public."orderItems".
 --
 
 CREATE TABLE public.orders (
-    "orderId" integer NOT NULL,
+    "orderId" integer NOT NULL PRIMARY KEY,
     "userId" integer NOT NULL,
     "orderDate" timestamp with time zone NOT NULL,
     "orderStatus" integer NOT NULL,
@@ -239,7 +239,7 @@ ALTER SEQUENCE public."orders_orderId_seq" OWNED BY public.orders."orderId";
 --
 
 CREATE TABLE public."productCategories" (
-    "productCategoryId" integer NOT NULL,
+    "productCategoryId" integer NOT NULL PRIMARY KEY,
     "productId" integer NOT NULL,
     "categoryId" integer NOT NULL
 );
@@ -274,7 +274,7 @@ ALTER SEQUENCE public."productCategories_productCategoryId_seq" OWNED BY public.
 --
 
 CREATE TABLE public."productColors" (
-    "productColorId" integer NOT NULL,
+    "productColorId" integer NOT NULL PRIMARY KEY,
     name character varying(255) NOT NULL,
     hex character varying(255) NOT NULL
 );
@@ -309,7 +309,7 @@ ALTER SEQUENCE public."productColors_productColorId_seq" OWNED BY public."produc
 --
 
 CREATE TABLE public."productGeneralImages" (
-    "productGeneralImageId" integer NOT NULL,
+    "productGeneralImageId" integer NOT NULL PRIMARY KEY,
     image character varying(255) NOT NULL,
     "productId" integer NOT NULL
 );
@@ -344,7 +344,7 @@ ALTER SEQUENCE public."productGeneralImages_productGeneralImageId_seq" OWNED BY 
 --
 
 CREATE TABLE public."productImages" (
-    "productImageId" integer NOT NULL,
+    "productImageId" integer NOT NULL PRIMARY KEY,
     image character varying(255) NOT NULL,
     "productId" integer NOT NULL,
     "productColorId" integer NOT NULL
@@ -380,7 +380,7 @@ ALTER SEQUENCE public."productImages_productImageId_seq" OWNED BY public."produc
 --
 
 CREATE TABLE public."productInventories" (
-    "productInventoryId" integer NOT NULL,
+    "productInventoryId" integer NOT NULL PRIMARY KEY,
     "productSizeId" integer NOT NULL,
     "productColorId" integer NOT NULL,
     "productId" integer NOT NULL,
@@ -420,7 +420,7 @@ ALTER SEQUENCE public."productInventories_productInventoryId_seq" OWNED BY publi
 --
 
 CREATE TABLE public."productSizes" (
-    "productSizeId" integer NOT NULL,
+    "productSizeId" integer NOT NULL PRIMARY KEY,
     name character varying(255) NOT NULL
 );
 
@@ -454,7 +454,7 @@ ALTER SEQUENCE public."productSizes_productSizeId_seq" OWNED BY public."productS
 --
 
 CREATE TABLE public.products (
-    "productId" integer NOT NULL,
+    "productId" integer NOT NULL PRIMARY KEY,
     quantity integer NOT NULL,
     sold integer DEFAULT 0 NOT NULL,
     name character varying(255) NOT NULL,
@@ -493,7 +493,7 @@ ALTER SEQUENCE public."products_productId_seq" OWNED BY public.products."product
 --
 
 CREATE TABLE public.roles (
-    "roleId" integer NOT NULL,
+    "roleId" integer NOT NULL PRIMARY KEY,
     name character varying(45) NOT NULL
 );
 
@@ -527,7 +527,7 @@ ALTER SEQUENCE public."roles_roleId_seq" OWNED BY public.roles."roleId";
 --
 
 CREATE TABLE public.users (
-    "userId" integer NOT NULL,
+    "userId" integer NOT NULL PRIMARY KEY,
     name character varying(255) NOT NULL,
     phone character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
