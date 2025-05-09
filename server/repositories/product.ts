@@ -520,6 +520,131 @@ const searchProduct = async ({
   }
 };
 
+const getProductsWithDiscount = async ({
+  limit = 10,
+  page = 1,
+}: {
+  limit?: number;
+  page?: number;
+}) => {
+  try {
+    const products = await Product.findAll({
+      limit: limit,
+      offset: (page - 1) * limit,
+      order: [['name', 'ASC']],
+      attributes: [
+        'productId',
+        'name',
+        'description',
+        'quantity',
+      ],
+      include: [
+        {
+          model: ProductCategory,
+          attributes: ['categoryId'],
+          include: [
+            {
+              model: Category,
+              attributes: ['name', 'image'],
+            },
+          ],
+        },
+        {
+          model: ProductInventory,
+          attributes: ['quantity', 'sold', 'price', 'priceDiscount'],
+          order: [['productSizeId', 'ASC']],
+          where: {
+            priceDiscount: {
+              [Op.gt]: 0,
+            },
+          },
+          include: [
+            {
+              model: ProductSize,
+              attributes: ['productSizeId', 'name'],
+            },
+            {
+              model: ProductColor,
+              attributes: ['productColorId', 'hex', 'name'],
+            },
+          ],
+        },
+        {
+          model: ProductGeneralImage,
+          attributes: ['image', 'productGeneralImageId'],
+        },
+        {
+          model: ProductImage,
+          attributes: ['image', 'productColorId', 'productImageId'],
+        },
+      ],
+    });
+    return products;
+  } catch (exception: any) {
+    throw new Error(exception.message);
+  }
+};
+
+const getLatestProducts = async ({
+  limit = 10,
+  page = 1,
+}: {
+  limit?: number;
+  page?: number;
+}) => {
+  try {
+    const products = await Product.findAll({
+      limit: limit,
+      offset: (page - 1) * limit,
+      order: [['createdAt', 'DESC']],
+      attributes: [
+        'productId',
+        'name',
+        'description',
+        'quantity',
+      ],
+      include: [
+        {
+          model: ProductCategory,
+          attributes: ['categoryId'],
+          include: [
+            {
+              model: Category,
+              attributes: ['name', 'image'],
+            },
+          ],
+        },
+        {
+          model: ProductInventory,
+          attributes: ['quantity', 'sold', 'price', 'priceDiscount'],
+          order: [['productSizeId', 'ASC']],
+          include: [
+            {
+              model: ProductSize,
+              attributes: ['productSizeId', 'name'],
+            },
+            {
+              model: ProductColor,
+              attributes: ['productColorId', 'hex', 'name'],
+            },
+          ],
+        },
+        {
+          model: ProductGeneralImage,
+          attributes: ['image', 'productGeneralImageId'],
+        },
+        {
+          model: ProductImage,
+          attributes: ['image', 'productColorId', 'productImageId'],
+        },
+      ],
+    });
+    return products;
+  } catch (exception: any) {
+    throw new Error(exception.message);
+  }
+};
+
 export default {
   getProducts,
   insertProduct,
@@ -529,4 +654,6 @@ export default {
   getCount,
   getCarts,
   searchProduct,
+  getProductsWithDiscount,
+  getLatestProducts,
 };

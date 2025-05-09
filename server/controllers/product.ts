@@ -144,6 +144,32 @@ const searchProduct = async (req: Request, res: Response) => {
   }
 };
 
+const getProductsWithDiscount = async (req: Request, res: Response) => {
+  try {
+    const { limit = 10, page = 1 } = req.query;
+    const products = await productRepository.getProductsWithDiscount({
+      limit: Number(limit),
+      page: Number(page),
+    });
+    res.status(HttpStatusCode.OK).json(products);
+  } catch (exception: any) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
+  }
+};
+
+const getLatestProducts = async (req: Request, res: Response) => {
+  try {
+    const { limit = 10, page = 1 } = req.query;
+    const products = await productRepository.getLatestProducts({
+      limit: Number(limit),
+      page: Number(page),
+    });
+    res.status(HttpStatusCode.OK).json(products);
+  } catch (exception: any) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(exception.toString());
+  }
+};
+
 export default {
   getProducts,
   updateProduct,
@@ -153,4 +179,6 @@ export default {
   getCount,
   getCarts,
   searchProduct,
+  getProductsWithDiscount,
+  getLatestProducts,
 };

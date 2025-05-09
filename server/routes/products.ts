@@ -11,5 +11,7 @@ router.delete('/:productId', productController.deleteProduct);
 router.get('/:productId', productController.getProductById);
 router.post('/getCarts', productController.getCarts);
 router.get('/search/:keyword', productController.searchProduct);
+router.get('/discount', productController.getProductsWithDiscount);
+router.get('/latest', productController.getLatestProducts);
 
 export default router;
