@@ -56,7 +56,7 @@ const getProducts = async (
         {
           model: ProductCategory,
           where: whereCategory,
-          attributes: ['categoryId'],
+          attributes: ['categoryId', 'name'],
         },
         {
           model: ProductInventory,
