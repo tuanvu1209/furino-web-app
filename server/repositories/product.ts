@@ -535,7 +535,6 @@ const getProductsWithDiscount = async ({
       attributes: [
         'productId',
         'name',
-        'description',
         'quantity',
       ],
       include: [
@@ -545,7 +544,7 @@ const getProductsWithDiscount = async ({
           include: [
             {
               model: Category,
-              attributes: ['name', 'image'],
+              attributes: ['name'],
             },
           ],
         },
@@ -573,10 +572,6 @@ const getProductsWithDiscount = async ({
           model: ProductGeneralImage,
           attributes: ['image', 'productGeneralImageId'],
         },
-        {
-          model: ProductImage,
-          attributes: ['image', 'productColorId', 'productImageId'],
-        },
       ],
     });
     return products;
@@ -600,7 +595,6 @@ const getLatestProducts = async ({
       attributes: [
         'productId',
         'name',
-        'description',
         'quantity',
       ],
       include: [
@@ -610,7 +604,7 @@ const getLatestProducts = async ({
           include: [
             {
               model: Category,
-              attributes: ['name', 'image'],
+              attributes: ['name'],
             },
           ],
         },
@@ -632,10 +626,6 @@ const getLatestProducts = async ({
         {
           model: ProductGeneralImage,
           attributes: ['image', 'productGeneralImageId'],
-        },
-        {
-          model: ProductImage,
-          attributes: ['image', 'productColorId', 'productImageId'],
         },
       ],
     });
