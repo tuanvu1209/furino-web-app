@@ -574,7 +574,21 @@ const getProductsWithDiscount = async ({
         },
       ],
     });
-    return products;
+
+    const count = await Product.count({
+      include: [
+        {
+          model: ProductInventory,
+          where: {
+            priceDiscount: {
+              [Op.gt]: 0,
+            },
+          },
+        },
+      ],
+    });
+
+    return { data: products, count };
   } catch (exception: any) {
     throw new Error(exception.message);
   }
@@ -629,7 +643,10 @@ const getLatestProducts = async ({
         },
       ],
     });
-    return products;
+
+    const count = await Product.count();
+
+    return { data: products, count };
   } catch (exception: any) {
     throw new Error(exception.message);
   }
